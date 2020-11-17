@@ -38,7 +38,7 @@ services:
       - '13000:13000'
       - '12000:12000/udp'
     volumes:
-      - pyrmont:/data
+      - prysm-volume:/data
   prysm-validator-node:
     image: gcr.io/prysmaticlabs/prysm/validator:stable
     restart: always
