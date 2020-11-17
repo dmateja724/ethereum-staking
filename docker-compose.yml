@@ -17,7 +17,13 @@ services:
       - '13000:13000'
       - '12000:12000/udp'
     volumes:
-      - pru
+      - pyrmont:/data
+  prysm-validator-node:
+    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    volumes:
+      - prysm-wallet:/wallet
+      - validator-db:/data
+
 volumes:
   geth-volume:
   prysm-volume:
