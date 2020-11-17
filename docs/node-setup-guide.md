@@ -45,7 +45,7 @@ These are the volumes that were created to get(h) this up and running. The names
 
 `docker network create --attachable ${network-name}`
 
-- For this example and write up the `${network-name}` is `medalla`
+- For this example and write up the `${network-name}` is `testnet`
 
 - Be sure that all ports are opened on router and through UFW on host machine, not the containers
 
@@ -77,7 +77,7 @@ gcr.io/prysmaticlabs/prysm/beacon-chain:stable \
 --rpc-host=prybeacon --rpc-port=4000 \
 --grpc-gateway-host=prybeacon \
 --http-web3provider=http://${host-ip}:8545 \
---medalla
+--pyrmont
 ```
 
 - local IP address and port to the Geth container must be specified in the the `--http-web3provider=` field
