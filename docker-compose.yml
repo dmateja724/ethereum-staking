@@ -6,15 +6,7 @@ services:
     container_name: geth-node
     hostname: geth-node
     restart: always
-    command:
-      [
-        '--goerli',
-        '--http',
-        '--http.addr=geth-node',
-        '--http.port=8545',
-        '--allow-insecure-unlock', # new addition, possible remove
-        '--http.api=web3,eth,personal,miner,net,txpool',
-      ]
+    command: --goerli --http --http.addr=geth-node --http.port=8545 --http.api=web3,eth,personal,miner,net,txpool
     networks:
       - testnet
     ports:
@@ -53,7 +45,7 @@ services:
   #       '/wallet',
   #     ]
   #   networks:
-        # - testnet
+  #     - testnet
   #   volumes:
   #     - prysm-wallet:/wallet
   #     - validator-db:/data
