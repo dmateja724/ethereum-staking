@@ -12,7 +12,7 @@ services:
         '--http',
         '--http.addr=geth-node',
         '--http.port=8545',
-        '--allow-insecure-unlock',
+        '--allow-insecure-unlock', # new addition, possible remove
         '--http.api=web3,eth,personal,miner,net,txpool',
       ]
     networks:
