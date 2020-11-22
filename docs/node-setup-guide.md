@@ -3,9 +3,6 @@
 ### TODO:
 
 - [ ] Configure `goethnode` and `pryvol` to only store directories that are needed and not entire container
-- [ ] Re-write terminal command attributes/flags to be more generic.
-  - take out hard coded values like ip addresses and replace with variables
-  - provide an explanation of what that value should be
 - [ ] Expand on setup guide documentation.
   - provide clarifying steps leading up to each command that is run
 

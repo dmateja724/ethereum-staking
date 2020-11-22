@@ -1,0 +1,15 @@
+# Parameters can be found at:
+# https://docs.prylabs.network/docs/prysm-usage/parameters/
+
+accept-terms-of-use: yes
+
+datadir: /data
+
+rpc-host: prysm-beacon-node
+rpc-port: 4000
+
+grpc-gateway-host: prysm-beacon-node
+
+http-web3provider: http://geth-node:8545
+
+pyrmont: yes
