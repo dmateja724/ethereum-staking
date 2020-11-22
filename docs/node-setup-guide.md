@@ -2,7 +2,6 @@
 
 ### TODO:
 
-- [ ] Configure `goethnode` and `pryvol` to only store directories that are needed and not entire container
 - [ ] Expand on setup guide documentation.
   - provide clarifying steps leading up to each command that is run
 
@@ -50,7 +49,7 @@ These are the volumes that were created to get(h) this up and running. The names
 
 ```bash
 docker run -it -v \
-geth-volume:/root \
+geth-volume:/root/.ethereum \
 -p 8545:8545 -p 8546:8546 -p 30303:30303 \
 --network testnet --name geth-node \
 ethereum/client-go:stable \
