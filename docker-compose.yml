@@ -6,7 +6,7 @@ services:
     container_name: geth-node
     hostname: geth-node
     restart: always
-    command: --goerli --http --http.addr=geth-node --http.port=8545 --http.api=web3,eth,personal,miner,net,txpool
+    command: --goerli --nousb --http --http.port=8545 --http.addr=geth-node --http.vhosts="*" --http.api="web3,eth,personal,net"
     networks:
       - testnet
     ports:
