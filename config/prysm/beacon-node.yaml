@@ -1,0 +1,14 @@
+# Parameters can be found at:
+# https://docs.prylabs.network/docs/prysm-usage/parameters/
+
+accept-terms-of-use: yes
+
+datadir: /data
+
+rpc-host: 0.0.0.0
+
+monitoring-host: 0.0.0.0
+
+http-web3provider: http://geth-node:8545
+
+pyrmont: yes

@@ -3,62 +3,61 @@ version: '3.8'
 services:
   geth-node:
     image: ethereum/client-go:stable
+    container_name: geth-node
+    hostname: geth-node
     restart: always
-    command:
-      [
-        '--goerli',
-        '--http',
-        '--http.addr',
-        'geth-volume',
-        '--http.api=web3,eth,personal,miner,net,txpool',
-      ]
-    networks: testnet
+    command: --goerli --nousb --http --http.port=8545 --http.addr=geth-node --http.vhosts="*" --http.api="web3,eth,personal,net"
+    networks:
+      - testnet
     ports:
-      - '8545:8545'
-      - '8546:8546'
-      - '8547:8547'
-      - '30303:30303'
+      - 8545:8545
+      - 8546:8546
+      - 8547:8547
+      - 30303:30303
     volumes:
       - geth-volume:/root/.ethereum
   prysm-beacon-node:
     image: gcr.io/prysmaticlabs/prysm/beacon-chain:stable
+    container_name: prysm-beacon-node
+    hostname: prysm-beacon-node
     restart: always
-    command: [
-        '--datadir=/data',
-        '--rpc-host=prysm-beacon-node',
-        '--rpc-port=4000',
-        '--grpc-gateway-host=prysm-beacon-node',
-        # need to fill in host-ip address
-        '--http-web3provider=http://${host-ip}:8545',
-        '--pyrmont',
-      ]
-    networks: testnet
+    depends_on:
+      - geth-node
+    command: --config-file=/config/beacon-node.yaml
+    networks:
+      - testnet
     ports:
-      - '4000:4000'
-      - '13000:13000'
-      - '12000:12000/udp'
+      - 4000:4000
+      - 13000:13000
+      - 12000:12000/udp
     volumes:
+      - ./config/prysm/beacon-node.yaml:/config/beacon-node.yaml:ro
       - prysm-volume:/data
-  prysm-validator-node:
-    image: gcr.io/prysmaticlabs/prysm/validator:stable
-    restart: always
-    command:
-      [
-        '--datadir=/data',
-        '--beacon-rpc-provider=prysm-beacon-node:4000',
-        '--wallet-dir',
-        '/wallet',
-      ]
-    networks: testnet
-    volumes:
-      - prysm-wallet:/wallet
-      - validator-db:/data
+  # prysm-validator-node:
+  #   image: gcr.io/prysmaticlabs/prysm/validator:stable
+  #   container_name: prysm-validator-node
+  #   restart: always
+  #   command:
+  #     [
+  #       '--datadir=/data',
+  #       '--beacon-rpc-provider=prysm-beacon-node:4000',
+  #       '--wallet-dir',
+  #       '/wallet',
+  #     ]
+  #   networks:
+  #     - testnet
+  #   volumes:
+  #     - prysm-wallet:/wallet
+  #     - validator-db:/data
 
 volumes:
   geth-volume:
+    name: geth-volume
   prysm-volume:
-  prysm-wallet:
-  validator-db:
+    name: prysm-volume
+  # prysm-wallet:
+  # validator-db:
 
 networks:
   testnet:
+    name: testnet

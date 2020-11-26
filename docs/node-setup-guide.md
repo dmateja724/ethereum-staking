@@ -2,10 +2,6 @@
 
 ### TODO:
 
-- [ ] Configure `goethnode` and `pryvol` to only store directories that are needed and not entire container
-- [ ] Re-write terminal command attributes/flags to be more generic.
-  - take out hard coded values like ip addresses and replace with variables
-  - provide an explanation of what that value should be
 - [ ] Expand on setup guide documentation.
   - provide clarifying steps leading up to each command that is run
 
@@ -36,10 +32,10 @@ This guide is buidling out these nodes inside Docker containers. So these ports 
 
 These are the volumes that were created to get(h) this up and running. The names can be changed to whatever you feel is appropriate.
 
-- `goethnode` - all goerli test net blockchain data
-- `pryvol` - all prysm beacon-node data
-- `prywallet` - where wallet information was saved and this volume was used during the key process (I believe)
-- `validatordb` - which will house all of the validator data
+- `geth-volume` - all goerli test net blockchain data
+- `prysm-volume` - all prysm beacon-node data
+- `prysm-wallet` - where wallet information was saved and this volume was used during the key process (I believe)
+- `validator-db` - which will house all of the validator data
 
 ## Set up Docker Network
 
@@ -53,12 +49,12 @@ These are the volumes that were created to get(h) this up and running. The names
 
 ```bash
 docker run -it -v \
-goethnode:/root \
+geth-volume:/root/.ethereum \
 -p 8545:8545 -p 8546:8546 -p 30303:30303 \
---network medalla --name goethnode \
-f7e7081def4e \
+--network testnet --name geth-node \
+ethereum/client-go:stable \
 --goerli \
---http --http.addr goethnode --http.api=web3,eth,personal,miner,net,txpool
+--http --http.addr geth-node --http.api=web3,eth,personal,miner,net,txpool
 ```
 
 - `--http.addr` should be the name of the container. this will replicate 'LocalHost'
@@ -70,13 +66,13 @@ f7e7081def4e \
 - this config was able to allow the beacon node and the validator containers to talk to them selves over the network
 
 ```bash
-docker run -it -p 4000:4000 -p 13000:13000 -p 12000:12000/udp -v pryvol:/data \
---name prybeacon --network medalla \
+docker run -it -p 4000:4000 -p 13000:13000 -p 12000:12000/udp -v prysm-volume:/data \
+--name prysm-beacon-node --network testnet \
 gcr.io/prysmaticlabs/prysm/beacon-chain:stable \
 --datadir=/data \
---rpc-host=prybeacon --rpc-port=4000 \
---grpc-gateway-host=prybeacon \
---http-web3provider=http://${host-ip}:8545 \
+--rpc-host=prysm-beacon-node --rpc-port=4000 \
+--grpc-gateway-host=prysm-beacon-node \
+--http-web3provider=http://172.18.0.2:8545 \
 --pyrmont
 ```
 
@@ -84,18 +80,45 @@ gcr.io/prysmaticlabs/prysm/beacon-chain:stable \
 
 - _NOTE: that the the `--rpc-host` `--grpc-gateway-host` must be specified to the name of the container_
 
+## Getting Deposit Ethereum
+
+### Download command line app
+
+Go to https://github.com/ethereum/eth2.0-deposit-cli/releases/
+
+From there download the correct package for your OS and unzip the file.
+
+```
+wget ${location-of-file}
+tar -xf ${file-name}
+```
+
+Move into that file and run
+
+```
+./deposit new-mnemonic --num_validators 1 --chain pyrmont
+```
+
+Copy `deposit_data.json` to upload to eth2 launchpad to initiate the contract
+
+_this command will pull a file from a remote server to your local machine_
+
+```
+scp <remote-user>@<remote-ip>:/path/to/remote/file /path/to/local/destination
+```
+
 ## Validator Node
 
 - after executing the following you will be prompted for the wallet password that was setup previously.
 
 ```bash
-docker run -ti --name validator \
--v prywallet:/wallet \
--v validatordb:/data \
---network medalla \
+docker run -it --name prysm-validator-node \
+-v prysm-wallet:/wallet \
+-v validator-db:/data \
+--network testnet \
 gcr.io/prysmaticlabs/prysm/validator:stable \
 --datadir=/data \
---beacon-rpc-provider=prybeacon:4000 \
+--beacon-rpc-provider=prysm-beacon-node:4000 \
 --wallet-dir /wallet
 ```
 
