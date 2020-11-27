@@ -21,9 +21,8 @@
 
 This guide is buidling out these nodes inside Docker containers. So these ports need to be opened up on the host machine's firewall and in the port forwarding section of your router.
 
-- 8545
-- 8546
-- 30303
+- 8545 - TCP, used by the HTTP based JSON RPC API
+- 30303 - TCP and UDP, used by the P2P protocol running the network
 - 4000
 - 13000
 - 12000
@@ -109,17 +108,40 @@ scp <remote-user>@<remote-ip>:/path/to/remote/file /path/to/local/destination
 
 ## Validator Node
 
+make an HD wallet
+
+https://docs.prylabs.network/docs/wallet/deterministic
+
+```
+./prysm.sh validator wallet create
+```
+
+record information received. store securely
+
+run `acocunt.yaml` file using the `prysm-validator-account-import` image
+
+```
+docker-compose -f account.yaml run prysm-validator-account-import
+```
+
+_NOTE:
+to exit an account run `acocunt.yaml` file using the `prysm-validator-voluntary-exit` image_
+
+```
+docker-compose -f account.yaml run prysm-validator-voluntary-exit
+```
+
 - after executing the following you will be prompted for the wallet password that was setup previously.
 
 ```bash
 docker run -it --name prysm-validator-node \
--v prysm-wallet:/wallet \
--v validator-db:/data \
+-v $HOME/validator:/data \
+-v validator-db:/db \
 --network testnet \
 gcr.io/prysmaticlabs/prysm/validator:stable \
---datadir=/data \
+--datadir=/db \
 --beacon-rpc-provider=prysm-beacon-node:4000 \
---wallet-dir /wallet
+--wallet-dir /data/wallets
 ```
 
 - the `--beacon-rpc-provider` needs to be specified to the container name that is running the beacon node. in this example above `prybeacon:4000`
