@@ -115,11 +115,10 @@ https://docs.prylabs.network/docs/wallet/deterministic
 ```
 ./prysm.sh validator wallet create
 ```
+
 record information received. store securely
 
 run `create-acocunt.yaml` file docker compose
-
-
 
 - after executing the following you will be prompted for the wallet password that was setup previously.
 

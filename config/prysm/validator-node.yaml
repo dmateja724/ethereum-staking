@@ -13,6 +13,6 @@ wallet-dir: /data/wallets
 
 wallet-password-file: /data/passwords/wallet-password.txt
 
-graffiti: "mk-test"
+graffiti: 'mk-test'
 
 pyrmont: yes
