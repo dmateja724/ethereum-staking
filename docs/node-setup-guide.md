@@ -128,7 +128,7 @@ docker-compose -f create-account.yaml run prysm-validator-account-import
 
 ```bash
 docker run -it --name prysm-validator-node \
--v $HOME/validator:/data:/data \
+-v $HOME/validator:/data \
 -v validator-db:/db \
 --network testnet \
 gcr.io/prysmaticlabs/prysm/validator:stable \
