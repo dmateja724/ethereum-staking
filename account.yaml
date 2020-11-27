@@ -10,6 +10,14 @@ services:
     volumes:
       - $HOME/validator_keys:/keys
       - $HOME/validator:/data
+  prysm-validator-voluntary-exit:
+    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    container_name: prysm-validator-voluntary-exit
+    command: accounts voluntary-exit --wallet-dir=/data/wallets --wallet-password-file="/data/passwords/wallet-password.txt" --beacon-rpc-provider=prysm-beacon-node:4000 --accept-terms-of-use --pyrmont
+    networks:
+      - testnet
+    volumes:
+      - $HOME/validator:/data
 
 networks:
   testnet:

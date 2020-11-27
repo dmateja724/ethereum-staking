@@ -118,10 +118,17 @@ https://docs.prylabs.network/docs/wallet/deterministic
 
 record information received. store securely
 
-run `create-acocunt.yaml` file docker compose
+run `acocunt.yaml` file using the `prysm-validator-account-import` image
 
 ```
-docker-compose -f create-account.yaml run prysm-validator-account-import
+docker-compose -f account.yaml run prysm-validator-account-import
+```
+
+_NOTE:
+to exit an account run `acocunt.yaml` file using the `prysm-validator-voluntary-exit` image_
+
+```
+docker-compose -f account.yaml run prysm-validator-voluntary-exit
 ```
 
 - after executing the following you will be prompted for the wallet password that was setup previously.
