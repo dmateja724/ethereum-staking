@@ -5,8 +5,6 @@ services:
     image: gcr.io/prysmaticlabs/prysm/validator:stable
     container_name: prysm-validator-account-import
     command: accounts import --keys-dir=/keys --wallet-dir=/data/wallets --wallet-password-file="/data/passwords/wallet-password.txt" --accept-terms-of-use --pyrmont
-    networks:
-      - testnet
     volumes:
       - $HOME/validator_keys:/keys
       - $HOME/validator:/data
@@ -14,11 +12,5 @@ services:
     image: gcr.io/prysmaticlabs/prysm/validator:stable
     container_name: prysm-validator-voluntary-exit
     command: accounts voluntary-exit --wallet-dir=/data/wallets --wallet-password-file="/data/passwords/wallet-password.txt" --beacon-rpc-provider=prysm-beacon-node:4000 --accept-terms-of-use --pyrmont
-    networks:
-      - testnet
     volumes:
       - $HOME/validator:/data
-
-networks:
-  testnet:
-    name: testnet
