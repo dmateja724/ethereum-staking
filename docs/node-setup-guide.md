@@ -21,9 +21,8 @@
 
 This guide is buidling out these nodes inside Docker containers. So these ports need to be opened up on the host machine's firewall and in the port forwarding section of your router.
 
-- 8545
-- 8546
-- 30303
+- 8545 - TCP, used by the HTTP based JSON RPC API
+- 30303 - TCP and UDP, used by the P2P protocol running the network
 - 4000
 - 13000
 - 12000
@@ -108,6 +107,19 @@ scp <remote-user>@<remote-ip>:/path/to/remote/file /path/to/local/destination
 ```
 
 ## Validator Node
+
+make an HD wallet
+
+https://docs.prylabs.network/docs/wallet/deterministic
+
+```
+./prysm.sh validator wallet create
+```
+record information received. store securely
+
+run `create-acocunt.yaml` file docker compose
+
+
 
 - after executing the following you will be prompted for the wallet password that was setup previously.
 

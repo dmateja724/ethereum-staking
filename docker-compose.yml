@@ -11,7 +11,6 @@ services:
       - testnet
     ports:
       - 8545:8545
-      - 8546:8546
       - 8547:8547
       - 30303:30303
     volumes:
@@ -33,30 +32,28 @@ services:
     volumes:
       - ./config/prysm/beacon-node.yaml:/config/beacon-node.yaml:ro
       - prysm-volume:/data
-  # prysm-validator-node:
-  #   image: gcr.io/prysmaticlabs/prysm/validator:stable
-  #   container_name: prysm-validator-node
-  #   restart: always
-  #   command:
-  #     [
-  #       '--datadir=/data',
-  #       '--beacon-rpc-provider=prysm-beacon-node:4000',
-  #       '--wallet-dir',
-  #       '/wallet',
-  #     ]
-  #   networks:
-  #     - testnet
-  #   volumes:
-  #     - prysm-wallet:/wallet
-  #     - validator-db:/data
+  prysm-validator-node:
+    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    container_name: prysm-validator-node
+    hostname: prysm-validator-node
+    restart: on-failure
+    depends_on:
+      - prysm-beacon-node
+    command: --config-file=/config/validator-node.yaml
+    networks:
+      - testnet
+    volumes:
+      - ./config/prysm/validator-node.yaml:/config/validator-node.yaml:ro
+      - $HOME/validator:/data
+      - validator-db:/db
 
 volumes:
   geth-volume:
     name: geth-volume
   prysm-volume:
     name: prysm-volume
-  # prysm-wallet:
-  # validator-db:
+  validator-db:
+    name: validator-db
 
 networks:
   testnet:

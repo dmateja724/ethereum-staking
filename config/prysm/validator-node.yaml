@@ -1,0 +1,18 @@
+# Parameters can be found at:
+# https://docs.prylabs.network/docs/prysm-usage/parameters/
+
+accept-terms-of-use: yes
+
+beacon-rpc-provider: prysm-beacon-node:4000
+
+monitoring-host: 0.0.0.0
+
+datadir: /db
+
+wallet-dir: /data/wallets
+
+wallet-password-file: /data/passwords/wallet-password.txt
+
+graffiti: "mk-test"
+
+pyrmont: yes

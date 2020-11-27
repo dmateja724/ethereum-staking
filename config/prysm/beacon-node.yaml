@@ -5,7 +5,7 @@ accept-terms-of-use: yes
 
 datadir: /data
 
-rpc-host: 0.0.0.0
+rpc-host: prysm-beacon-node
 
 monitoring-host: 0.0.0.0
 
