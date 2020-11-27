@@ -120,17 +120,21 @@ record information received. store securely
 
 run `create-acocunt.yaml` file docker compose
 
+```
+docker-compose -f create-account.yaml run prysm-validator-account-import
+```
+
 - after executing the following you will be prompted for the wallet password that was setup previously.
 
 ```bash
 docker run -it --name prysm-validator-node \
--v prysm-wallet:/wallet \
--v validator-db:/data \
+-v $HOME/validator:/data:/data \
+-v validator-db:/db \
 --network testnet \
 gcr.io/prysmaticlabs/prysm/validator:stable \
---datadir=/data \
+--datadir=/db \
 --beacon-rpc-provider=prysm-beacon-node:4000 \
---wallet-dir /wallet
+--wallet-dir /data/wallets
 ```
 
 - the `--beacon-rpc-provider` needs to be specified to the container name that is running the beacon node. in this example above `prybeacon:4000`
