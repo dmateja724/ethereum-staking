@@ -108,6 +108,8 @@ scp <remote-user>@<remote-ip>:/path/to/remote/file /path/to/local/destination
 
 ## Validator Node
 
+<!-- poossibly remove wallet creation -->
+
 make an HD wallet
 
 https://docs.prylabs.network/docs/wallet/deterministic
