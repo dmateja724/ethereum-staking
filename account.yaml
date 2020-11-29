@@ -2,15 +2,16 @@ version: '3.8'
 
 services:
   prysm-validator-account-import:
-    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    image: gcr.io/prysmaticlabs/prysm/validator:v1.0.1
     container_name: prysm-validator-account-import
-    command: accounts import --keys-dir=/keys --wallet-dir=/data/wallets --wallet-password-file="/data/passwords/wallet-password.txt" --accept-terms-of-use --pyrmont
+    command: accounts import --keys-dir=/keys --wallet-dir=/data/wallets --accept-terms-of-use --pyrmont
     volumes:
-      - $HOME/validator_keys:/keys
-      - $HOME/validator:/data
+      - /mnt/faststorage/pyrmont1/wallet-volume/validator_keys:/keys
+      - /mnt/faststorage/pyrmont1/wallet-volume:/data
+
   prysm-validator-voluntary-exit:
-    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    image: gcr.io/prysmaticlabs/prysm/validator:v1.0.1
     container_name: prysm-validator-voluntary-exit
     command: accounts voluntary-exit --wallet-dir=/data/wallets --wallet-password-file="/data/passwords/wallet-password.txt" --beacon-rpc-provider=prysm-beacon-node:4000 --accept-terms-of-use --pyrmont
     volumes:
-      - $HOME/validator:/data
+      - /mnt/faststorage/pyrmont1/wallet-volume:/data
