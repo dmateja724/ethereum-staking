@@ -1,7 +1,5 @@
 # Ethereum 2 Staking Setup Guide - Using Ubuntu 20.04 & Docker Compose
 
-## Pre-Requisites:
-
 ### Download CLI app
 
 Go to https://github.com/ethereum/eth2.0-deposit-cli/releases/
@@ -56,8 +54,6 @@ docker-compose up
 ```
 
 This will spin up all the nodes and they will start downloading the block chain. If you are not sync'd with the blockchain it may take some time before your other nodes start showing successful console outputs. Once your nodes are all sync'd up, you can proceed to adding the depostit contract.
-
-<!-- this needs to go after nodes have been sync'd -->
 
 ### Add deposit data to Eth 2 Lanchpad
 

@@ -58,11 +58,11 @@ ethereum/client-go:stable \
 
 - `--http.addr` should be the name of the container. this will replicate 'LocalHost'
 
-- all of the `--http.api` s need to be specified
+- All of the `--http.api` s need to be specified
 
 ## Beacon Node
 
-- this config was able to allow the beacon node and the validator containers to talk to them selves over the network
+- This config was able to allow the beacon node and the validator containers to talk to them selves over the network
 
 ```bash
 docker run -it -p 4000:4000 -p 13000:13000 -p 12000:12000/udp -v prysm-volume:/data \
@@ -75,7 +75,7 @@ gcr.io/prysmaticlabs/prysm/beacon-chain:stable \
 --pyrmont
 ```
 
-- local IP address and port to the Geth container must be specified in the the `--http-web3provider=` field
+- Local IP address and port to the Geth container must be specified in the the `--http-web3provider=` field
 
 - _NOTE: that the the `--rpc-host` `--grpc-gateway-host` must be specified to the name of the container_
 
@@ -108,32 +108,20 @@ scp <remote-user>@<remote-ip>:/path/to/remote/file /path/to/local/destination
 
 ## Validator Node
 
-<!-- poossibly remove wallet creation -->
-
-make an HD wallet
-
-https://docs.prylabs.network/docs/wallet/deterministic
-
-```
-./prysm.sh validator wallet create
-```
-
-record information received. store securely
-
-run `acocunt.yaml` file using the `prysm-validator-account-import` image
+Run `acocunt.yaml` file using the `prysm-validator-account-import` image
 
 ```
 docker-compose -f account.yaml run prysm-validator-account-import
 ```
 
 _NOTE:
-to exit an account run `acocunt.yaml` file using the `prysm-validator-voluntary-exit` image_
+To exit an account run `acocunt.yaml` file using the `prysm-validator-voluntary-exit` image_
 
 ```
 docker-compose -f account.yaml run prysm-validator-voluntary-exit
 ```
 
-- after executing the following you will be prompted for the wallet password that was setup previously.
+- After executing the following you will be prompted for the wallet password that was setup previously.
 
 ```bash
 docker run -it --name prysm-validator-node \
@@ -146,4 +134,4 @@ gcr.io/prysmaticlabs/prysm/validator:stable \
 --wallet-dir /data/wallets
 ```
 
-- the `--beacon-rpc-provider` needs to be specified to the container name that is running the beacon node. in this example above `prybeacon:4000`
+- The `--beacon-rpc-provider` needs to be specified to the container name that is running the beacon node. in this example above `prybeacon:4000`

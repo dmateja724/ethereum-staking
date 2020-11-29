@@ -7,10 +7,10 @@ services:
     command: accounts import --keys-dir=/keys --wallet-dir=/data/wallets --accept-terms-of-use --pyrmont
     volumes:
       - $HOME/validator_keys:/keys
-      - $HOME/validator:/data
+      - wallet-volume:/data
   prysm-validator-voluntary-exit:
     image: gcr.io/prysmaticlabs/prysm/validator:stable
     container_name: prysm-validator-voluntary-exit
     command: accounts voluntary-exit --wallet-dir=/data/wallets --wallet-password-file="/data/passwords/wallet-password.txt" --beacon-rpc-provider=prysm-beacon-node:4000 --accept-terms-of-use --pyrmont
     volumes:
-      - $HOME/validator:/data
+      - wallet-volume:/data
