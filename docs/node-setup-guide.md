@@ -50,7 +50,7 @@ These are the volumes that were created to get(h) this up and running. The names
 docker run -it -v \
 geth-volume:/root/.ethereum \
 -p 8545:8545 -p 8546:8546 -p 30303:30303 \
---network testnet --name geth-node \
+--network testnet --name geth-volume
 ethereum/client-go:stable \
 --goerli \
 --http --http.addr geth-node --http.api=web3,eth,personal,miner,net,txpool
