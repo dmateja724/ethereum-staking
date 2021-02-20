@@ -14,9 +14,9 @@ services:
       - 8547:8547
       - 30303:30303
     volumes:
-      - geth-volume:/root/.ethereum
+      - /mnt/faststorage/pyrmont1/geth-volume:/root/.ethereum
   prysm-beacon-node:
-    image: gcr.io/prysmaticlabs/prysm/beacon-chain:stable
+    image: gcr.io/prysmaticlabs/prysm/beacon-chain:v1.0.1
     container_name: prysm-beacon-node
     hostname: prysm-beacon-node
     restart: always
@@ -31,9 +31,10 @@ services:
       - 12000:12000/udp
     volumes:
       - ./config/prysm/beacon-node.yaml:/config/beacon-node.yaml:ro
-      - prysm-volume:/data
+      - /mnt/faststorage/pyrmont1/beacon-volume:/data
+      
   prysm-validator-node:
-    image: gcr.io/prysmaticlabs/prysm/validator:stable
+    image: gcr.io/prysmaticlabs/prysm/validator:v1.0.1
     container_name: prysm-validator-node
     hostname: prysm-validator-node
     restart: on-failure
@@ -44,16 +45,8 @@ services:
       - testnet
     volumes:
       - ./config/prysm/validator-node.yaml:/config/validator-node.yaml:ro
-      - $HOME/validator:/data
-      - validator-db:/db
-
-volumes:
-  geth-volume:
-    name: geth-volume
-  prysm-volume:
-    name: prysm-volume
-  validator-db:
-    name: validator-db
+      - /mnt/faststorage/pyrmont1/wallet-volume:/data
+      - /mnt/faststorage/pyrmont1/validator-db:/db
 
 networks:
   testnet:
